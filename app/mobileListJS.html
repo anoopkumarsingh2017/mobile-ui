@@ -1,0 +1,44 @@
+<html>
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	function load() {
+		console.log('loading...');
+
+		// 1. Create a new XMLHttpRequest object
+		let xhr = new XMLHttpRequest();
+
+		// 2. Configure it: GET-request for the URL /article/.../load
+		xhr.open('GET', 'http://localhost:8080/m/mobiles');
+
+		// 3. Send the request over the network
+		xhr.send();
+
+		// 4. This will be called after the response is received
+		xhr.onload = function() {
+			if (xhr.status != 200) { // analyze HTTP status of the response
+				alert(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
+			} else { // show the result
+				//alert(`Done, got ${xhr.response.length} bytes`); // response is the server response
+				var data = JSON.parse(xhr.response);
+				var i;
+				for (i = 0; i < data.length; i++) {
+					$("#divContainer").append(
+							'<div>' + data[i].name + ' : ' + data[i].price+ ' : ' + data[i].company
+									+ '</div>')
+				}
+			}
+		};
+	}
+</script>
+</head>
+
+<body>
+	Mobiles:<br>
+	<button onclick="load();" type="button">Load</button>
+	<div id="divContainer"></div>
+
+</body>
+
+</html>

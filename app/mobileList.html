@@ -1,0 +1,36 @@
+<html>
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+	function load() {
+		console.log('loading...');
+		
+		$.ajax('http://localhost:8080/m/mobiles', {
+		    type: 'GET',  // http method
+		    success: function (responseData, status, xhr) {
+		    	console.log('responseData: '+responseData);
+		        var data = responseData;
+				var i;
+				for (i = 0; i < data.length; i++) {
+					$("#divContainer").append(
+							'<div>' + data[i].name + ' : ' + data[i].price+ ' : ' + data[i].company
+									+ '</div>')
+				}
+		    },
+		    error: function (jqXhr, textStatus, errorMessage) {
+		            console.log('Error' + errorMessage);
+		    }
+		});
+	}
+</script>
+</head>
+
+<body>
+	Mobiles:<br>
+	<button onclick="load();" type="button">Load</button>
+	<div id="divContainer"></div>
+
+</body>
+
+</html>
